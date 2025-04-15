@@ -5,22 +5,23 @@
 #include <QObject>
 #include <QString>
 
+#include "library.hpp"
+
 class Backend : public QObject {
   Q_OBJECT
   QML_ELEMENT
   QML_SINGLETON
 
-  Q_PROPERTY(QString message READ message CONSTANT)
+  Q_PROPERTY(EntryList entries READ entries CONSTANT)
 
  public:
-  explicit Backend(QObject *parent = nullptr);
+  explicit Backend(QObject* parent = nullptr);
 
-  inline QString message() const {
-    using namespace Qt::Literals;
-    return u"Hello, Komikman"_s;
-  }
+  const EntryList& entries() const;
 
  private:
+  Library m_library;
+  EntryList m_entries;
 };
 
 #endif

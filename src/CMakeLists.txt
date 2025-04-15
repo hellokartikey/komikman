@@ -8,12 +8,17 @@ PUBLIC
   Qt6::Widgets
   Qt6::QuickControls2
   libassert::assert
+  nlohmann_json::nlohmann_json
 )
 
 target_sources(komikman_static
 PRIVATE
-  backend.cpp
   backend.hpp
+  backend.cpp
+  library.hpp
+  library.cpp
+  entry.hpp
+  entry.cpp
 )
 
 ecm_add_qml_module(komikman_static URI Komikman)

@@ -8,6 +8,7 @@ class ExampleRecipe(ConanFile):
 
     def requirements(self):
         self.requires("libassert/2.1.4")
+        self.requires("nlohmann_json/3.11.3")
 
     def build(self):
         cmake = CMake(self)

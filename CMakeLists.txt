@@ -28,6 +28,7 @@ COMPONENTS
 )
 
 find_package(libassert REQUIRED)
+find_package(nlohmann_json REQUIRED)
 
 include(KDEInstallDirs)
 include(KDECMakeSettings)
