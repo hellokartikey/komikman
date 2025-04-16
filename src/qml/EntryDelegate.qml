@@ -4,100 +4,56 @@ import QtQuick.Controls as Controls
 
 import org.kde.kirigami as Kirigami
 
-Item {
-  id: root
+CoverImage {
+  id: image
+
+  required property var modelData
+
+  source: modelData.image
+  coverHoverEnabled: true
 
   width: Kirigami.Units.gridUnit * 16
-  height: width * 1.4
 
   Rectangle {
-    id: entry_rect
+    id: gradient
 
-    anchors {
-      fill: parent
-      margins: Kirigami.Units.gridUnit * 0.5
-    }
+    anchors.fill: parent
 
-    border {
-      color: {
-        if (mouse.containsMouse) {
-          Kirigami.Theme.highlightColor
-        } else {
-          "transparent"
-        }
-      }
-      width: 1
-    }
+    radius: parent.radius
 
-    layer.enabled: true
-
-    radius: Kirigami.Units.gridUnit * 0.5
-
-    Image {
-      id: image
-
-      anchors {
-        fill: parent
-        margins: parent.border.width
+    gradient: Gradient {
+      GradientStop {
+        position: 0.8
+        color: "transparent"
       }
 
-      source: modelData.image
-
-      sourceSize {
-        width: width
-        height: height
-      }
-
-      layer {
-        enabled: true
-        effect: MultiEffect {
-          maskSource: parent
-          maskEnabled: true
-        }
+      GradientStop {
+        position: 1.0
+        color: "black"
       }
     }
+  }
 
-    Rectangle {
-      id: gradient
+  MouseArea {
+    id: mouse
 
-      anchors.fill: parent
+    anchors.fill: parent
 
-      radius: parent.radius
+    hoverEnabled: coverHoverEnabled
+    cursorShape: Qt.PointingHandCursor
 
-      gradient: Gradient {
-        GradientStop {
-          position: 0.8
-          color: "transparent"
-        }
-
-        GradientStop {
-          position: 1.0
-          color: "black"
-        }
-      }
-    }
-
-    MouseArea {
-      id: mouse
-
-      anchors.fill: parent
-
-      hoverEnabled: true
-      cursorShape: Qt.PointingHandCursor
-
-      onClicked: Backend.openEntry(modelData)
-    }
+    onClicked: Backend.openEntry(modelData)
   }
 
   Kirigami.Heading {
     anchors {
-      bottom: entry_rect.bottom
-      left: entry_rect.left
-      right: entry_rect.right
+      bottom: image.bottom
+      left: image.left
+      right: image.right
       margins: Kirigami.Units.gridUnit
     }
 
-    width: entry_rect.width
+    width: image.width
 
     color: "white"
     elide: Text.ElideRight
@@ -107,8 +63,8 @@ Item {
 
   Controls.Button {
     anchors {
-      top: entry_rect.top
-      right: entry_rect.right
+      top: image.top
+      right: image.right
       margins: Kirigami.Units.gridUnit * 0.5
     }
 

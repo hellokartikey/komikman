@@ -28,6 +28,7 @@ SOURCES
   qml/Main.qml
   qml/EntryDelegate.qml
   qml/EntryPage.qml
+  qml/CoverImage.qml
 )
 
 add_executable(komikman main.cpp)

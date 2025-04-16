@@ -1,0 +1,52 @@
+import QtQuick
+import QtQuick.Effects
+
+import org.kde.kirigami as Kirigami
+
+Rectangle {
+  id: root
+
+  required property url source
+  property bool coverHoverEnabled: false
+
+  height: width * 1.4
+  radius: Kirigami.Units.gridUnit * 0.5
+  layer.enabled: true
+
+  Component.onCompleted: console.log(image.progress)
+
+  border {
+    color: {
+      if (mouse.containsMouse && coverHoverEnabled) {
+        Kirigami.Theme.highlightColor
+      } else {
+        "transparent"
+      }
+    }
+    width: 1
+  }
+
+  Image {
+    id: image
+
+    anchors {
+      fill: parent
+      margins: parent.border.width
+    }
+
+    source: root.source
+
+    sourceSize {
+      width: image.width
+      height: image.height
+    }
+
+    layer {
+      enabled: true
+      effect: MultiEffect {
+        maskSource: parent
+        maskEnabled: true
+      }
+    }
+  }
+}
