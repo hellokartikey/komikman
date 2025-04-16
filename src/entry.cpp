@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QTextStream>
 
-#include <nlohmann/json.hpp>
+#include <libassert/assert.hpp>
 
 namespace json = nlohmann;
 using namespace Qt::Literals;
@@ -49,9 +49,32 @@ Entry::Entry(QString path, QObject* parent)
       }
     }
 
-    if (auto status = json["status"]; status.is_number_integer()) {
+    if (auto status = json["status"]; status.is_string()) {
       m_status = status.get<Status>();
     }
+  }
+}
+
+QString Entry::status_string() const {
+  using namespace Qt::Literals;
+
+  switch (m_status) {
+    case Unknown:
+      return u"Unknown"_s;
+    case Ongoing:
+      return u"Ongoing"_s;
+    case Completed:
+      return u"Completed"_s;
+    case Licensed:
+      return u"Licensed"_s;
+    case PublishingFinished:
+      return u"Publishing Finished"_s;
+    case Cancelled:
+      return u"Cancelled"_s;
+    case OnHiatus:
+      return u"On Hiatus"_s;
+    default:
+      UNREACHABLE();
   }
 }
 

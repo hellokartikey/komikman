@@ -6,6 +6,28 @@
 #include <QObject>
 #include <QUrl>
 
+#include <nlohmann/json.hpp>
+
+enum Status {
+  Unknown = 0,
+  Ongoing = 1,
+  Completed = 2,
+  Licensed = 3,
+  PublishingFinished = 4,
+  Cancelled = 5,
+  OnHiatus = 6
+};
+
+NLOHMANN_JSON_SERIALIZE_ENUM(Status, {
+                                         {Unknown, "0"},
+                                         {Ongoing, "1"},
+                                         {Completed, "2"},
+                                         {Licensed, "3"},
+                                         {PublishingFinished, "4"},
+                                         {Cancelled, "5"},
+                                         {OnHiatus, "6"},
+                                     })
+
 class Entry : public QObject {
   Q_OBJECT
 
@@ -17,23 +39,16 @@ class Entry : public QObject {
 
   Q_PROPERTY(QStringList genre MEMBER m_genre NOTIFY genreChanged)
   Q_PROPERTY(Status status MEMBER m_status NOTIFY statusChanged)
+  Q_PROPERTY(QString status_string READ status_string NOTIFY statusChanged)
 
   Q_PROPERTY(QUrl image MEMBER m_image NOTIFY imageChanged)
 
  public:
-  enum Status {
-    Unknown,
-    Ongoing,
-    Completed,
-    Licensed,
-    PublishingFinished,
-    Cancelled,
-    OnHiatus
-  };
-
   Q_ENUM(Status)
 
   explicit Entry(QString path, QObject* parent);
+
+  QString status_string() const;
 
  Q_SIGNALS:
   void titleChanged();
@@ -57,7 +72,7 @@ class Entry : public QObject {
   QString m_artist;
 
   QStringList m_genre;
-  Status m_status;
+  Status m_status = Status::Unknown;
 
   QUrl m_image;
 };
