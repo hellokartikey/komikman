@@ -1,25 +1,32 @@
 import QtQuick
-import QtQuick.Effects
 import QtQuick.Controls as Controls
 
 import org.kde.kirigami as Kirigami
 
-CoverImage {
-  id: image
+Item {
+  id: root
 
   required property var modelData
 
-  source: modelData.image
-  coverHoverEnabled: true
+  width: Kirigami.Units.gridUnit * 12
+  height: width * 1.4
 
-  width: Kirigami.Units.gridUnit * 16
+  CoverImage {
+    id: image
+
+    anchors.fill: parent
+    anchors.margins: Kirigami.Units.gridUnit * 0.5
+
+    source: modelData.image
+    coverHoverEnabled: true
+  }
 
   Rectangle {
     id: gradient
 
-    anchors.fill: parent
+    anchors.fill: image
 
-    radius: parent.radius
+    radius: image.radius
 
     gradient: Gradient {
       GradientStop {
@@ -32,17 +39,6 @@ CoverImage {
         color: "black"
       }
     }
-  }
-
-  MouseArea {
-    id: mouse
-
-    anchors.fill: parent
-
-    hoverEnabled: coverHoverEnabled
-    cursorShape: Qt.PointingHandCursor
-
-    onClicked: Backend.openEntry(modelData)
   }
 
   Kirigami.Heading {

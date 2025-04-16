@@ -13,8 +13,6 @@ Rectangle {
   radius: Kirigami.Units.gridUnit * 0.5
   layer.enabled: true
 
-  Component.onCompleted: console.log(image.progress)
-
   border {
     color: {
       if (mouse.containsMouse && coverHoverEnabled) {
@@ -48,5 +46,17 @@ Rectangle {
         maskEnabled: true
       }
     }
+  }
+
+  MouseArea {
+    id: mouse
+
+    anchors.fill: parent
+
+    enabled: root.coverHoverEnabled
+    hoverEnabled: root.coverHoverEnabled
+    cursorShape: Qt.PointingHandCursor
+
+    onClicked: Backend.openEntry(modelData)
   }
 }

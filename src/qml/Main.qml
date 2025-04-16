@@ -27,7 +27,7 @@ Kirigami.ApplicationWindow {
     GridView {
       clip: true
 
-      cellWidth: Kirigami.Units.gridUnit * 16
+      cellWidth: Kirigami.Units.gridUnit * 12
       cellHeight: cellWidth * 1.4
 
       model: Backend.entries
