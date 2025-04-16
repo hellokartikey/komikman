@@ -12,6 +12,15 @@ Kirigami.ApplicationWindow {
 
   visible: true
 
+  Connections {
+    target: Backend
+    function onEntryChanged() {
+      if (Backend.entry) {
+        pageStack.layers.push(entryPage)
+      }
+    }
+  }
+
   pageStack.initialPage: Kirigami.ScrollablePage {
     title: "Library"
 
@@ -24,5 +33,10 @@ Kirigami.ApplicationWindow {
       model: Backend.entries
       delegate: EntryDelegate {}
     }
+  }
+
+  Component {
+    id: entryPage
+    EntryPage {}
   }
 }

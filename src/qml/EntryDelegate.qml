@@ -7,9 +7,6 @@ import org.kde.kirigami as Kirigami
 Item {
   id: root
 
-  required property url image
-  required property string title
-
   width: Kirigami.Units.gridUnit * 16
   height: width * 1.4
 
@@ -44,7 +41,7 @@ Item {
         margins: parent.border.width
       }
 
-      source: root.image
+      source: modelData.image
 
       sourceSize {
         width: width
@@ -88,7 +85,7 @@ Item {
       hoverEnabled: true
       cursorShape: Qt.PointingHandCursor
 
-      onClicked: console.log(title)
+      onClicked: Backend.openEntry(modelData)
     }
   }
 
@@ -105,7 +102,7 @@ Item {
     color: "white"
     elide: Text.ElideRight
 
-    text: root.title
+    text: modelData.title
   }
 
   Controls.Button {

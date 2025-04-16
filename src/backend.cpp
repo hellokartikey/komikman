@@ -14,4 +14,9 @@ const EntryList& Backend::entries() const {
   return m_entries;
 }
 
+void Backend::openEntry(Entry* entry) {
+  m_entry = entry;
+  Q_EMIT entryChanged();
+}
+
 #include "moc_backend.cpp"

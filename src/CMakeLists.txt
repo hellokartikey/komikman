@@ -27,6 +27,7 @@ ecm_target_qml_sources(komikman_static
 SOURCES
   qml/Main.qml
   qml/EntryDelegate.qml
+  qml/EntryPage.qml
 )
 
 add_executable(komikman main.cpp)
