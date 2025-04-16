@@ -1,31 +1,44 @@
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Controls as Controls
 
 import org.kde.kirigami as Kirigami
 
-Rectangle {
+Item {
   id: root
 
   required property url image
   required property string title
 
   width: Kirigami.Units.gridUnit * 16
-  height: Kirigami.Units.gridUnit * 22
+  height: width * 1.4
 
   Rectangle {
-    id: image
+    id: entry_rect
 
-    anchors.centerIn: parent
-
-    width: Kirigami.Units.gridUnit * 15
-    height: Kirigami.Units.gridUnit * 20
+    anchors {
+      fill: parent
+      margins: Kirigami.Units.gridUnit * 0.5
+    }
 
     border {
-      color: mouse.containsMouse ? Kirigami.Theme.highlightColor : "transparent"
+      color: {
+        if (mouse.containsMouse) {
+          Kirigami.Theme.highlightColor
+        } else {
+          "transparent"
+        }
+      }
       width: 1
     }
 
+    layer.enabled: true
+
+    radius: Kirigami.Units.gridUnit * 0.5
+
     Image {
+      id: image
+
       anchors {
         fill: parent
         margins: parent.border.width
@@ -37,6 +50,14 @@ Rectangle {
         width: width
         height: height
       }
+
+      layer {
+        enabled: true
+        effect: MultiEffect {
+          maskSource: parent
+          maskEnabled: true
+        }
+      }
     }
 
     Rectangle {
@@ -44,7 +65,7 @@ Rectangle {
 
       anchors.fill: parent
 
-      radius: root.radius
+      radius: parent.radius
 
       gradient: Gradient {
         GradientStop {
@@ -73,15 +94,13 @@ Rectangle {
 
   Kirigami.Heading {
     anchors {
-      bottom: image.bottom
-      left: image.left
-      right: image.right
-      bottomMargin: Kirigami.Units.gridUnit
-      leftMargin: Kirigami.Units.gridUnit
-      rightMargin: Kirigami.Units.gridUnit
+      bottom: entry_rect.bottom
+      left: entry_rect.left
+      right: entry_rect.right
+      margins: Kirigami.Units.gridUnit
     }
 
-    width: image.width
+    width: entry_rect.width
 
     color: "white"
     elide: Text.ElideRight
@@ -91,10 +110,9 @@ Rectangle {
 
   Controls.Button {
     anchors {
-      top: image.top
-      right: image.right
-      topMargin: Kirigami.Units.gridUnit * 0.5
-      rightMargin: Kirigami.Units.gridUnit * 0.5
+      top: entry_rect.top
+      right: entry_rect.right
+      margins: Kirigami.Units.gridUnit * 0.5
     }
 
     icon.name: "media-playback-start-symbolic"

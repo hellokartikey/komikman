@@ -19,7 +19,7 @@ Kirigami.ApplicationWindow {
       clip: true
 
       cellWidth: Kirigami.Units.gridUnit * 16
-      cellHeight: Kirigami.Units.gridUnit * 22
+      cellHeight: cellWidth * 1.4
 
       model: Backend.entries
       delegate: EntryDelegate {}
