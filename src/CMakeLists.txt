@@ -26,6 +26,7 @@ ecm_add_qml_module(komikman_static URI Komikman)
 ecm_target_qml_sources(komikman_static
 SOURCES
   qml/Main.qml
+  qml/EntryData.qml
   qml/EntryDelegate.qml
   qml/EntryPage.qml
   qml/CoverImage.qml
