@@ -23,42 +23,36 @@ Entry::Entry(QString path, QObject* parent)
   if (m_path.exists(u"details.json"_s)) {
     auto details = QFile{m_path.filePath(u"details.json"_s)};
     details.open(QIODevice::ReadOnly | QIODevice::Text);
-
-    auto content = QTextStream(&details);
-    auto text = content.readAll();
-
+    auto text = details.readAll();
     auto json = json::json::parse(text.toStdString());
 
+    // Load individual fields
     if (auto title = json["title"]; title.is_string()) {
       m_title = QString::fromStdString(title.get<std::string>());
     }
+
+    if (auto description = json["description"]; description.is_string()) {
+      m_description = QString::fromStdString(description.get<std::string>());
+    }
+
+    if (auto author = json["author"]; author.is_string()) {
+      m_author = QString::fromStdString(author.get<std::string>());
+    }
+
+    if (auto artist = json["artist"]; artist.is_string()) {
+      m_artist = QString::fromStdString(artist.get<std::string>());
+    }
+
+    if (auto genres = json["genre"]; genres.is_array()) {
+      for (const auto& genre : genres) {
+        m_genre << QString::fromStdString(genre.get<std::string>());
+      }
+    }
+
+    if (auto status = json["status"]; status.is_number_integer()) {
+      m_status = status.get<Status>();
+    }
   }
-}
-
-const QString& Entry::title() const {
-  return m_title;
-}
-
-void Entry::setTitle(QString title) {
-  if (m_title == title) {
-    return;
-  }
-
-  m_title = title;
-  Q_EMIT titleChanged();
-}
-
-const QUrl& Entry::image() const {
-  return m_image;
-}
-
-void Entry::setImage(QUrl image) {
-  if (m_image == image) {
-    return;
-  }
-
-  m_image = image;
-  Q_EMIT imageChanged();
 }
 
 #include "moc_entry.cpp"
