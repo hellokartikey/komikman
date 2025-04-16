@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.30)
 project(komikman VERSION 0.1.0)
 
 set(QT_MIN_VERSION "6.8")
-set(KF_MIN_VERSION "6.12")
+set(KF_MIN_VERSION "6.0")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 

@@ -1,21 +1,40 @@
 import QtQuick
+import QtQuick.Controls as Controls
 
 import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.formcard as Form
 
-Kirigami.ScrollablePage {
+Form.FormCardPage {
   id: root
 
   property var entry: Backend.entry
 
   title: entry.title
 
-  Column {
-    anchors.fill: parent
+  actions: [
+    Kirigami.Action {
+      text: "Resume"
+      icon.name: "media-playback-start-symbolic"
+    }
+  ]
 
-    spacing: Kirigami.Units.gridUnit
+  Form.FormHeader {
+    title: "Details"
+  }
+
+  Form.FormCard {
+    topPadding: Kirigami.Units.gridUnit
+    bottomPadding: Kirigami.Units.gridUnit
+
+    clip: true
 
     Row {
       spacing: Kirigami.Units.gridUnit
+
+      anchors {
+        centerIn: parent
+        margins: Kirigami.Units.gridUnit
+      }
 
       CoverImage {
         source: entry.image
@@ -23,7 +42,7 @@ Kirigami.ScrollablePage {
       }
 
       Column {
-        spacing: Kirigami.Units.gridUnit * 0.25
+        spacing: Kirigami.Units.gridUnit * 0.5
         anchors {
           verticalCenter: parent.verticalCenter
         }
@@ -48,33 +67,35 @@ Kirigami.ScrollablePage {
           icon: "clock-symbolic"
           text: entry.status_string
         }
-      }
-    }
 
-    Grid {
-      anchors {
-        left: parent.left
-        right: parent.right
-      }
+        Flow {
+          spacing: Kirigami.Units.gridUnit * 0.25
 
-      spacing: Kirigami.Units.gridUnit * 0.5
+          width: parent.width
 
-      Repeater {
-        model: entry.genre
-
-        delegate: Kirigami.Chip {
-          text: modelData
-          closable: false
-          checkable: false
+          Repeater {
+            model: entry.genre
+            delegate: Kirigami.Chip {
+              text: modelData
+              icon.name: "tag-symbolic"
+              closable: false
+              checkable: false
+            }
+          }
         }
       }
     }
+  }
 
-    Kirigami.Heading {
-      text: "Description"
-    }
+  Form.FormHeader {
+    title: "Description"
+  }
 
-    Text {
+  Form.FormCard {
+    topPadding: Kirigami.Units.gridUnit
+    bottomPadding: Kirigami.Units.gridUnit
+
+    Form.FormSectionText {
       text: entry.description
       width: parent.width
       wrapMode: Text.WordWrap

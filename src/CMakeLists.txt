@@ -7,6 +7,7 @@ PUBLIC
   Qt6::Quick
   Qt6::Widgets
   Qt6::QuickControls2
+  KF6::Kirigami
   libassert::assert
   nlohmann_json::nlohmann_json
 )
