@@ -47,4 +47,5 @@ kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
 qt_policy(SET QTP0001 NEW)
 qt_standard_project_setup()
 
+add_subdirectory(data)
 add_subdirectory(src)

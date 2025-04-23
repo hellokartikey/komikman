@@ -15,6 +15,9 @@ int main(int argc, char *argv[]) {
   auto app = QApplication{argc, argv};
   auto qml = QQmlApplicationEngine{};
 
+  QApplication::setWindowIcon(
+      QIcon::fromTheme(u"com.github.hellokartikey.komikman"_s));
+
   QObject::connect(
       &qml, &QQmlApplicationEngine::objectCreationFailed, &app,
       [] { QApplication::exit(-1); }, Qt::QueuedConnection);

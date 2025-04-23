@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Komikman
+GenericName=Comicbook Reader
+Exec=komikman %u
+Terminal=false
+Type=Application
+Icon=com.github.hellokartikey.komikman
