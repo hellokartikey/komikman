@@ -9,6 +9,9 @@ Kirigami.ApplicationWindow {
   width: 800
   height: 600
 
+  minimumWidth: 500
+  minimumHeight: 500
+
   title: "Komikman"
 
   visible: true

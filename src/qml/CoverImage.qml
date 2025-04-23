@@ -18,7 +18,11 @@ Rectangle {
       if (mouse.containsMouse && coverHoverEnabled) {
         Kirigami.Theme.highlightColor
       } else {
-        "transparent"
+        if (coverHoverEnabled) {
+          "transparent"
+        } else {
+          "black"
+        }
       }
     }
     width: 1
@@ -55,7 +59,7 @@ Rectangle {
 
     enabled: root.coverHoverEnabled
     hoverEnabled: root.coverHoverEnabled
-    cursorShape: Qt.PointingHandCursor
+    cursorShape: enabled ? Qt.PointingHandCursor : undefined
 
     onClicked: Backend.openEntry(modelData)
   }

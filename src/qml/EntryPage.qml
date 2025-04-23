@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import QtQuick.Controls as Controls
 
 import org.kde.kirigami as Kirigami
@@ -23,33 +24,29 @@ Form.FormCardPage {
   }
 
   Form.FormCard {
-    topPadding: Kirigami.Units.gridUnit
-    bottomPadding: Kirigami.Units.gridUnit
-
     clip: true
 
-    Row {
+    RowLayout {
       spacing: Kirigami.Units.gridUnit
 
-      anchors {
-        centerIn: parent
-        margins: Kirigami.Units.gridUnit
-      }
+      Layout.margins: Kirigami.Units.gridUnit
+      Layout.fillWidth: true
 
       CoverImage {
         source: entry.image
         width: Kirigami.Units.gridUnit * 10
       }
 
-      Column {
+      ColumnLayout {
         spacing: Kirigami.Units.gridUnit * 0.5
-        anchors {
-          verticalCenter: parent.verticalCenter
-        }
+
+        Layout.fillWidth: true
 
         Kirigami.Heading {
+          Layout.fillWidth: true
           text: entry.title
           type: Kirigami.Heading.Type.Primary
+          elide: Text.ElideRight
           level: 1
         }
 
@@ -71,7 +68,7 @@ Form.FormCardPage {
         Flow {
           spacing: Kirigami.Units.gridUnit * 0.25
 
-          width: parent.width
+          Layout.fillWidth: true
 
           Repeater {
             model: entry.genre
@@ -92,12 +89,12 @@ Form.FormCardPage {
   }
 
   Form.FormCard {
-    topPadding: Kirigami.Units.gridUnit
-    bottomPadding: Kirigami.Units.gridUnit
+    Text {
+      Layout.fillWidth: true
+      Layout.margins: Kirigami.Units.gridUnit
 
-    Form.FormSectionText {
+      horizontalAlignment: Text.AlignJustify
       text: entry.description
-      width: parent.width
       wrapMode: Text.WordWrap
     }
   }
