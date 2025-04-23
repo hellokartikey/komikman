@@ -25,6 +25,8 @@ find_package(KF6 ${KF_MIN_VERSION}
 REQUIRED
 COMPONENTS
   Kirigami
+  CoreAddons
+  I18n
 )
 
 find_package(libassert REQUIRED)
@@ -36,6 +38,7 @@ include(KDECompilerSettings)
 include(KDEClangFormat)
 include(KDEGitCommitHooks)
 include(ECMQmlModule)
+include(ECMSetupVersion)
 
 file(GLOB_RECURSE ALL_CXX_SOURCE_FILES src/*.cpp src/*.hpp)
 kde_clang_format(${ALL_CXX_SOURCE_FILES})

@@ -3,8 +3,11 @@
 #include <QIcon>
 #include <QObject>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QQuickStyle>
 #include <QString>
+
+#include <KLocalizedContext>
 
 using namespace Qt::Literals;
 
@@ -22,6 +25,7 @@ int main(int argc, char *argv[]) {
     QIcon::setThemeName(u"breeze"_s);
   }
 
+  qml.rootContext()->setContextObject(new KLocalizedContext(&qml));
   qml.loadFromModule(u"Komikman"_s, u"Main"_s);
 
   return app.exec();
