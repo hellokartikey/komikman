@@ -111,19 +111,21 @@ Form.FormCardPage {
     }
   }
 
-  Form.FormCardPage {
+  Component {
     id: chaptersPage
+    Form.FormCardPage {
 
-    title: "Chapters"
-    visible: false
+      title: "Chapters"
+      visible: false
 
-    Form.FormHeader {}
+      Form.FormHeader {}
 
-    Form.FormCard {
-      Repeater {
-        model: 200
-        delegate: Form.FormButtonDelegate {
-          text: `Chapter ${200 - modelData}`
+      Form.FormCard {
+        Repeater {
+          model: entry.chapters
+          delegate: Form.FormButtonDelegate {
+            text: modelData.title
+          }
         }
       }
     }

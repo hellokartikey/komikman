@@ -1,5 +1,8 @@
 #include "entry.hpp"
 
+#include <ranges>
+
+#include <QCollator>
 #include <QDebug>
 #include <QTextStream>
 
@@ -75,6 +78,47 @@ QString Entry::status_string() const {
       return u"On Hiatus"_s;
     default:
       UNREACHABLE();
+  }
+}
+
+bool Entry::is_chapters_loaded() const {
+  return m_is_chapters_loaded;
+}
+
+void Entry::load_chapters() {
+  if (!is_chapters_loaded()) {
+    refresh_chapters();
+  }
+}
+
+void Entry::refresh_chapters() {
+  auto chapters_list = ChapterList{};
+
+  if (auto chapters = m_path.entryInfoList(); !chapters.empty()) {
+    for (const auto& chapter : chapters) {
+      if (chapter.baseName() == u"cover"_s) {
+        continue;
+      }
+
+      if (chapter.fileName() == u"details.json"_s) {
+        continue;
+      }
+
+      chapters_list << new Chapter(chapter.baseName(), this);
+    }
+
+    auto collator = QCollator{};
+    collator.setNumericMode(true);
+
+    std::ranges::sort(chapters_list, [&](auto* lhs, auto* rhs) {
+      return collator.compare(lhs->title(), rhs->title()) < 0;
+    });
+  }
+
+  if (chapters_list != m_chapters) {
+    m_chapters = chapters_list;
+    m_is_chapters_loaded = true;
+    Q_EMIT chaptersChanged();
   }
 }
 

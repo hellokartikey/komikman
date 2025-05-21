@@ -16,6 +16,7 @@ const EntryList& Backend::entries() const {
 
 void Backend::openEntry(Entry* entry) {
   m_entry = entry;
+  m_entry->load_chapters();
   Q_EMIT entryChanged();
 }
 

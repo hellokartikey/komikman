@@ -8,6 +8,8 @@
 
 #include <nlohmann/json.hpp>
 
+#include "chapter.hpp"
+
 enum Status {
   Unknown = 0,
   Ongoing = 1,
@@ -43,12 +45,18 @@ class Entry : public QObject {
 
   Q_PROPERTY(QUrl image MEMBER m_image NOTIFY imageChanged)
 
+  Q_PROPERTY(ChapterList chapters MEMBER m_chapters NOTIFY chaptersChanged)
+
  public:
   Q_ENUM(Status)
 
   explicit Entry(QString path, QObject* parent);
 
   QString status_string() const;
+
+  bool is_chapters_loaded() const;
+  void load_chapters();
+  void refresh_chapters();
 
  Q_SIGNALS:
   void titleChanged();
@@ -61,6 +69,8 @@ class Entry : public QObject {
   void statusChanged();
 
   void imageChanged();
+
+  void chaptersChanged();
 
  private:
   QDir m_path;
@@ -75,6 +85,9 @@ class Entry : public QObject {
   Status m_status = Status::Unknown;
 
   QUrl m_image;
+
+  ChapterList m_chapters;
+  bool m_is_chapters_loaded = false;
 };
 
 using EntryList = QList<Entry*>;

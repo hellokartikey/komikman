@@ -24,6 +24,8 @@ target_sources(komikman
 PRIVATE
   backend.hpp
   backend.cpp
+  chapter.hpp
+  chapter.cpp
   config.hpp
   config.cpp
   entry.hpp
