@@ -6,22 +6,14 @@ import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as Form
 
 Form.FormCardPage {
-  id: root
+  id: detailsPage
 
   property var entry: Backend.entry
 
   title: entry.title
+  visible: false
 
-  actions: [
-    Kirigami.Action {
-      text: "Resume"
-      icon.name: "media-playback-start-symbolic"
-    }
-  ]
-
-  Form.FormHeader {
-    title: "Details"
-  }
+  Form.FormHeader {}
 
   Form.FormCard {
     clip: true
@@ -84,9 +76,29 @@ Form.FormCardPage {
     }
   }
 
-  Form.FormHeader {
-    title: "Description"
+  Form.FormHeader {}
+
+  Form.FormCard {
+    Form.FormButtonDelegate {
+      text: "Resume"
+      icon.name: "media-playback-start-symbolic"
+    }
+
+    Form.FormDelegateSeparator {}
+
+    Form.FormButtonDelegate {
+      text: "Chapters"
+      icon.name: "address-book-new-symbolic"
+
+      onClicked: {
+        if (! chaptersPage.visible) {
+          applicationWindow().pageStack.layers.push(chaptersPage)
+        }
+      }
+    }
   }
+
+  Form.FormHeader {}
 
   Form.FormCard {
     Text {
@@ -96,6 +108,24 @@ Form.FormCardPage {
       horizontalAlignment: Text.AlignJustify
       text: entry.description
       wrapMode: Text.WordWrap
+    }
+  }
+
+  Form.FormCardPage {
+    id: chaptersPage
+
+    title: "Chapters"
+    visible: false
+
+    Form.FormHeader {}
+
+    Form.FormCard {
+      Repeater {
+        model: 200
+        delegate: Form.FormButtonDelegate {
+          text: `Chapter ${200 - modelData}`
+        }
+      }
     }
   }
 }
