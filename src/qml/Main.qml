@@ -2,10 +2,13 @@ import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as Form
 
 import QtQuick
+import QtQuick.Layouts
 
 import Komikman
 
 Kirigami.ApplicationWindow {
+  id: root
+
   width: 800
   height: 600
 
@@ -20,7 +23,7 @@ Kirigami.ApplicationWindow {
     target: Backend
     function onEntryChanged() {
       if (Backend.entry) {
-        pageStack.layers.push(entryPage)
+        applicationWindow().pageStack.layers.push(entryPage)
       }
     }
   }
@@ -38,13 +41,17 @@ Kirigami.ApplicationWindow {
       Kirigami.Action {
         text: "About"
         icon.name: "help-about-symbolic"
-        onTriggered: pageStack.layers.push(aboutPage)
+        onTriggered: applicationWindow().pageStack.layers.push(aboutPage)
       },
 
-      Kirigami.Action { separator: true },
+      Kirigami.Action {
+        separator: true
+        visible: ! Kirigami.Settings.isMobile
+      },
 
       Kirigami.Action {
         text: "Quit"
+        visible: ! Kirigami.Settings.isMobile
         icon.name: "application-exit-symbolic"
         onTriggered: Qt.quit()
       }
@@ -54,14 +61,11 @@ Kirigami.ApplicationWindow {
   pageStack.initialPage: Kirigami.ScrollablePage {
     title: "Library"
 
-    GridView {
-      clip: true
-
-      cellWidth: Kirigami.Units.gridUnit * 12
-      cellHeight: cellWidth * 1.4
-
-      model: Backend.entries
-      delegate: EntryDelegate {}
+    Flow {
+      Repeater {
+        model: Backend.entries
+        delegate: EntryDelegate {}
+      }
     }
   }
 
