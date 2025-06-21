@@ -93,6 +93,7 @@ void Entry::load_chapters() {
 
 void Entry::refresh_chapters() {
   auto chapters_list = ChapterList{};
+  m_path.refresh();
 
   if (auto chapters = m_path.entryInfoList(); !chapters.empty()) {
     for (const auto& chapter : chapters) {
@@ -115,11 +116,13 @@ void Entry::refresh_chapters() {
     });
   }
 
-  if (chapters_list != m_chapters) {
-    m_chapters = chapters_list;
-    m_is_chapters_loaded = true;
-    Q_EMIT chaptersChanged();
+  for (auto* chapter : m_chapters) {
+    delete chapter;
   }
+
+  m_chapters = chapters_list;
+  m_is_chapters_loaded = true;
+  Q_EMIT chaptersChanged();
 }
 
 #include "moc_entry.cpp"

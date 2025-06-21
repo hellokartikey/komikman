@@ -56,7 +56,7 @@ class Entry : public QObject {
 
   bool is_chapters_loaded() const;
   void load_chapters();
-  void refresh_chapters();
+  Q_INVOKABLE void refresh_chapters();
 
  Q_SIGNALS:
   void titleChanged();

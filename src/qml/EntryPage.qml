@@ -118,6 +118,14 @@ Form.FormCardPage {
       title: "Chapters"
       visible: false
 
+      actions: [
+        Kirigami.Action {
+          text: "Refresh"
+          icon.name: "view-refresh"
+          onTriggered: entry.refresh_chapters()
+        }
+      ]
+
       Form.FormHeader {}
 
       Form.FormCard {

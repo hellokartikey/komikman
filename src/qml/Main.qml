@@ -2,7 +2,6 @@ import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as Form
 
 import QtQuick
-import QtQuick.Layouts
 
 import Komikman
 
