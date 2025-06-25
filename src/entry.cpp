@@ -105,7 +105,7 @@ void Entry::refresh_chapters() {
         continue;
       }
 
-      chapters_list << new Chapter(chapter.baseName(), this);
+      chapters_list << Chapter::make(chapter.absoluteFilePath(), this);
     }
 
     auto collator = QCollator{};

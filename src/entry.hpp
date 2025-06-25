@@ -52,6 +52,7 @@ class Entry : public QObject {
 
   explicit Entry(QString path, QObject* parent);
 
+  // FIXME: These functions should be renamed
   QString status_string() const;
 
   bool is_chapters_loaded() const;
