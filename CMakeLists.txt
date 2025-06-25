@@ -28,6 +28,7 @@ COMPONENTS
   Kirigami
   CoreAddons
   I18n
+  Archive
 )
 
 find_package(libassert REQUIRED)

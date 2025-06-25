@@ -16,6 +16,7 @@ PRIVATE
   KF6::Kirigami
   KF6::CoreAddons
   KF6::I18n
+  KF6::Archive
   libassert::assert
   nlohmann_json::nlohmann_json
 )
@@ -26,6 +27,8 @@ PRIVATE
   backend.cpp
   chapter.hpp
   chapter.cpp
+  cbz.hpp
+  cbz.cpp
   config.hpp
   config.cpp
   entry.hpp

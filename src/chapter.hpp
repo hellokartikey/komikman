@@ -11,9 +11,15 @@ class Chapter : public QObject {
   Q_PROPERTY(QString title MEMBER m_title CONSTANT)
 
  public:
-  explicit Chapter(QString title, QObject* parent = nullptr);
+  explicit Chapter(QString path, QObject* parent = nullptr);
+  virtual ~Chapter() = default;
 
   const QString& title() const;
+
+  virtual void open() {}
+  virtual void close() {}
+
+  static Chapter* make(QString path, QObject* parent = nullptr);
 
  private:
   QString m_title;

@@ -14,6 +14,7 @@ class Backend : public QObject {
 
   Q_PROPERTY(EntryList entries READ entries CONSTANT)
   Q_PROPERTY(Entry* entry MEMBER m_entry NOTIFY entryChanged)
+  Q_PROPERTY(Chapter* chapter MEMBER m_chapter NOTIFY chapterChanged)
 
  public:
   explicit Backend(QObject* parent = nullptr);
@@ -21,13 +22,18 @@ class Backend : public QObject {
   const EntryList& entries() const;
 
   Q_INVOKABLE void openEntry(Entry* entry);
+  Q_INVOKABLE void closeEntry();
   Q_SIGNAL void entryChanged();
+
+  Q_INVOKABLE void openChapter(Chapter* chapter);
+  Q_INVOKABLE void closeChapter();
+  Q_SIGNAL void chapterChanged();
 
  private:
   Library m_library;
 
-  EntryList m_entries;
   Entry* m_entry = nullptr;
+  Chapter* m_chapter = nullptr;
 };
 
 #endif
