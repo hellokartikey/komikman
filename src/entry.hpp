@@ -41,7 +41,7 @@ class Entry : public QObject {
 
   Q_PROPERTY(QStringList genre MEMBER m_genre NOTIFY genreChanged)
   Q_PROPERTY(Status status MEMBER m_status NOTIFY statusChanged)
-  Q_PROPERTY(QString status_string READ status_string NOTIFY statusChanged)
+  Q_PROPERTY(QString status_string READ statusString NOTIFY statusChanged)
 
   Q_PROPERTY(QUrl image MEMBER m_image NOTIFY imageChanged)
 
@@ -52,12 +52,11 @@ class Entry : public QObject {
 
   explicit Entry(QString path, QObject* parent);
 
-  // FIXME: These functions should be renamed
-  QString status_string() const;
+  QString statusString() const;
 
-  bool is_chapters_loaded() const;
-  void load_chapters();
-  Q_INVOKABLE void refresh_chapters();
+  bool isChaptersLoaded() const;
+  void loadChapters();
+  Q_INVOKABLE void refreshChapters();
 
  Q_SIGNALS:
   void titleChanged();

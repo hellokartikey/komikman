@@ -58,7 +58,7 @@ Entry::Entry(QString path, QObject* parent)
   }
 }
 
-QString Entry::status_string() const {
+QString Entry::statusString() const {
   using namespace Qt::Literals;
 
   switch (m_status) {
@@ -81,17 +81,17 @@ QString Entry::status_string() const {
   }
 }
 
-bool Entry::is_chapters_loaded() const {
+bool Entry::isChaptersLoaded() const {
   return m_is_chapters_loaded;
 }
 
-void Entry::load_chapters() {
-  if (!is_chapters_loaded()) {
-    refresh_chapters();
+void Entry::loadChapters() {
+  if (!isChaptersLoaded()) {
+    refreshChapters();
   }
 }
 
-void Entry::refresh_chapters() {
+void Entry::refreshChapters() {
   auto chapters_list = ChapterList{};
   m_path.refresh();
 

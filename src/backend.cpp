@@ -18,7 +18,7 @@ void Backend::openEntry(Entry* entry) {
   }
 
   m_entry = entry;
-  m_entry->load_chapters();
+  m_entry->loadChapters();
   Q_EMIT entryChanged();
 }
 
