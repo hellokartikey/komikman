@@ -18,15 +18,6 @@ Kirigami.ApplicationWindow {
 
   visible: true
 
-  Connections {
-    target: Backend
-    function onEntryChanged() {
-      if (Backend.entry) {
-        applicationWindow().pageStack.layers.push(entryPage)
-      }
-    }
-  }
-
   globalDrawer: Kirigami.GlobalDrawer {
     isMenu: true
 

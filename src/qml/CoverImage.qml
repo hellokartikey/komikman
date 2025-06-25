@@ -3,6 +3,8 @@ import QtQuick.Effects
 
 import org.kde.kirigami as Kirigami
 
+import Komikman
+
 Rectangle {
   id: root
 
@@ -61,6 +63,9 @@ Rectangle {
     hoverEnabled: root.coverHoverEnabled
     cursorShape: enabled ? Qt.PointingHandCursor : undefined
 
-    onClicked: Backend.openEntry(modelData)
+    onClicked: {
+      Backend.openEntry(modelData)
+      applicationWindow().pageStack.layers.push(entryPage)
+    }
   }
 }

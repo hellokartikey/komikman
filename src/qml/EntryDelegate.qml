@@ -6,8 +6,6 @@ import org.kde.kirigami as Kirigami
 Item {
   id: root
 
-  required property var modelData
-
   width: Kirigami.Units.gridUnit * 12
   height: width * 1.4
 
