@@ -1,9 +1,10 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls as Controls
 
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as Form
+
+import Komikman
 
 Form.FormCardPage {
   id: detailsPage
@@ -25,7 +26,7 @@ Form.FormCardPage {
       Layout.fillWidth: true
 
       CoverImage {
-        source: entry.image
+        source: Backend.entry.image
         width: Kirigami.Units.gridUnit * 10
       }
 
@@ -44,17 +45,17 @@ Form.FormCardPage {
 
         EntryData {
           icon: "im-user-symbolic"
-          text: entry.author
+          text: Backend.entry.author
         }
 
         EntryData {
           icon: "draw-brush-symbolic"
-          text: entry.artist
+          text: Backend.entry.artist
         }
 
         EntryData {
           icon: "clock-symbolic"
-          text: entry.status_string
+          text: Backend.entry.status_string
         }
 
         Flow {
@@ -63,7 +64,7 @@ Form.FormCardPage {
           Layout.fillWidth: true
 
           Repeater {
-            model: entry.genre
+            model: Backend.entry.genre
             delegate: Kirigami.Chip {
               text: modelData
               icon.name: "tag-symbolic"
@@ -113,29 +114,6 @@ Form.FormCardPage {
 
   Component {
     id: chaptersPage
-    Form.FormCardPage {
-
-      title: "Chapters"
-      visible: false
-
-      actions: [
-        Kirigami.Action {
-          text: "Refresh"
-          icon.name: "view-refresh"
-          onTriggered: entry.refresh_chapters()
-        }
-      ]
-
-      Form.FormHeader {}
-
-      Form.FormCard {
-        Repeater {
-          model: entry.chapters
-          delegate: Form.FormButtonDelegate {
-            text: modelData.title
-          }
-        }
-      }
-    }
+    ChaptersPage {}
   }
 }

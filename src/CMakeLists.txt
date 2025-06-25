@@ -43,6 +43,8 @@ SOURCES
   qml/EntryDelegate.qml
   qml/EntryPage.qml
   qml/CoverImage.qml
+  qml/ChaptersPage.qml
+  qml/ChapterView.qml
 )
 
 install(TARGETS komikman ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
