@@ -22,11 +22,9 @@ class Backend : public QObject {
   const Entry::List& entries() const;
 
   Q_INVOKABLE void openEntry(Entry* entry);
-  Q_INVOKABLE void closeEntry();
   Q_SIGNAL void entryChanged();
 
   Q_INVOKABLE void openChapter(QString path);
-  Q_INVOKABLE void closeChapter();
   Q_SIGNAL void chapterChanged();
 
   Chapter* currentChapter();
