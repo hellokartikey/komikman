@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 
 import org.kde.kirigami as Kirigami
 import org.kde.kirigamiaddons.formcard as Form
@@ -22,6 +23,12 @@ Form.FormCardPage {
   Form.FormHeader {}
 
   Form.FormCard {
+    Form.FormButtonDelegate {
+      enabled: false
+      text: "No Chapters"
+      visible: Backend.entry.chapters.length == 0
+    }
+
     Repeater {
       model: Backend.entry.chapters
       delegate: Form.FormButtonDelegate {
