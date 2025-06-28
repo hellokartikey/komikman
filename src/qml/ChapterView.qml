@@ -10,6 +10,4 @@ Kirigami.Page {
   id: root
 
   title: Backend.chapter.title
-
-  Component.onDestruction: Backend.closeChapter()
 }

@@ -17,45 +17,41 @@ Entry::Entry(QString path, QObject* parent)
     : QObject(parent),
       m_path(path) {
   m_title = m_path.dirName();
-
   m_path.setFilter(QDir::NoDotAndDotDot | QDir::AllEntries);
   if (auto covers = m_path.entryList(COVER_FILTER); !covers.isEmpty()) {
     m_image = QUrl::fromLocalFile(m_path.filePath(covers.first()));
   }
 
+  auto json = json::json({});
+
   if (m_path.exists(u"details.json"_s)) {
     auto details = QFile{m_path.filePath(u"details.json"_s)};
     details.open(QIODevice::ReadOnly | QIODevice::Text);
     auto text = details.readAll();
-    auto json = json::json::parse(text.toStdString());
+    json = json::json::parse(text.toStdString());
+  }
 
-    // Load individual fields
-    if (auto title = json["title"]; title.is_string()) {
-      m_title = QString::fromStdString(title.get<std::string>());
-    }
+  // Load individual fields
+  m_title = QString::fromStdString(
+      json.value<std::string>("title", m_title.toStdString()));
 
-    if (auto description = json["description"]; description.is_string()) {
-      m_description = QString::fromStdString(description.get<std::string>());
-    }
+  m_description = QString::fromStdString(
+      json.value<std::string>("description", "No Description"));
 
-    if (auto author = json["author"]; author.is_string()) {
-      m_author = QString::fromStdString(author.get<std::string>());
-    }
+  m_author =
+      QString::fromStdString(json.value<std::string>("author", "Unknown"));
 
-    if (auto artist = json["artist"]; artist.is_string()) {
-      m_artist = QString::fromStdString(artist.get<std::string>());
-    }
+  m_artist =
+      QString::fromStdString(json.value<std::string>("artist", "Unknown"));
 
-    if (auto genres = json["genre"]; genres.is_array()) {
-      for (const auto& genre : genres) {
-        m_genre << QString::fromStdString(genre.get<std::string>());
-      }
-    }
-
-    if (auto status = json["status"]; status.is_string()) {
-      m_status = status.get<Status>();
+  m_genre = {};
+  if (auto genres = json["genre"]; genres.is_array()) {
+    for (const auto& genre : genres) {
+      m_genre << QString::fromStdString(genre.get<std::string>());
     }
   }
+
+  m_status = json.value("status", Unknown);
 }
 
 QString Entry::statusString() const {
@@ -92,7 +88,7 @@ void Entry::loadChapters() {
 }
 
 void Entry::refreshChapters() {
-  auto chapters_list = ChapterList{};
+  auto chapters_list = QStringList{};
   m_path.refresh();
 
   if (auto chapters = m_path.entryInfoList(); !chapters.empty()) {
@@ -105,24 +101,30 @@ void Entry::refreshChapters() {
         continue;
       }
 
-      chapters_list << Chapter::make(chapter.absoluteFilePath(), this);
+      chapters_list << chapter.absoluteFilePath();
     }
 
     auto collator = QCollator{};
     collator.setNumericMode(true);
 
-    std::ranges::sort(chapters_list, [&](auto* lhs, auto* rhs) {
-      return collator.compare(lhs->title(), rhs->title()) < 0;
+    std::ranges::sort(chapters_list, [&](auto lhs, auto rhs) {
+      return collator.compare(lhs, rhs) < 0;
     });
   }
 
-  for (auto* chapter : m_chapters) {
-    delete chapter;
-  }
-
-  m_chapters = chapters_list;
+  m_chapters_path = chapters_list;
   m_is_chapters_loaded = true;
   Q_EMIT chaptersChanged();
+}
+
+QStringList Entry::chapters() const {
+  auto list = QStringList{};
+
+  for (auto chapter : m_chapters_path) {
+    list << QFileInfo{chapter}.baseName();
+  }
+
+  return list;
 }
 
 #include "moc_entry.cpp"

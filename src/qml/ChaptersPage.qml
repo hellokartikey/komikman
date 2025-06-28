@@ -11,13 +11,11 @@ Form.FormCardPage {
   title: "Chapters"
   visible: false
 
-  Component.onDestruction: Backend.closeChapter();
-
   actions: [
     Kirigami.Action {
       text: "Refresh"
       icon.name: "view-refresh"
-      onTriggered: Backend.entry.refresh_chapters()
+      onTriggered: Backend.entry.refreshChapters()
     }
   ]
 
@@ -27,10 +25,12 @@ Form.FormCardPage {
     Repeater {
       model: Backend.entry.chapters
       delegate: Form.FormButtonDelegate {
-        text: modelData.title
+        required property string modelData
+
+        text: modelData
         onClicked: {
           Backend.openChapter(modelData)
-          applicationWindow().pageStack.layers.push(root.chapterView)
+          applicationWindow().pageStack.layers.push(chapterView)
         }
       }
     }

@@ -18,3 +18,5 @@ void CbzChapter::close() {
   m_zip.close();
   m_file.close();
 }
+
+#include "moc_cbz.cpp"

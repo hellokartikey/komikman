@@ -9,19 +9,19 @@
 class Library : public QObject {
   Q_OBJECT
 
-  Q_PROPERTY(EntryList entries READ entries NOTIFY entriesChanged)
+  Q_PROPERTY(Entry::List entries READ entries NOTIFY entriesChanged)
 
  public:
   explicit Library(QString path, QObject* parent = nullptr);
 
-  const EntryList& entries() const;
+  const Entry::List& entries() const;
   Q_SIGNAL void entriesChanged();
 
   const QDir& root() const;
 
  private:
   QDir m_root;
-  EntryList m_entries;
+  Entry::List m_entries;
 };
 
 #endif

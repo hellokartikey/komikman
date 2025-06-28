@@ -92,9 +92,7 @@ Form.FormCardPage {
       icon.name: "address-book-new-symbolic"
 
       onClicked: {
-        if (! chaptersPage.visible) {
-          applicationWindow().pageStack.layers.push(chaptersPage)
-        }
+        applicationWindow().pageStack.layers.push(chaptersPage)
       }
     }
   }

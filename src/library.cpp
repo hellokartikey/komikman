@@ -9,7 +9,7 @@ Library::Library(QString path, QObject* parent)
   }
 }
 
-const EntryList& Library::entries() const {
+const Entry::List& Library::entries() const {
   return m_entries;
 }
 

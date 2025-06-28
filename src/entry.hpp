@@ -33,19 +33,23 @@ NLOHMANN_JSON_SERIALIZE_ENUM(Status, {
 class Entry : public QObject {
   Q_OBJECT
 
-  Q_PROPERTY(QString title MEMBER m_title NOTIFY titleChanged)
-  Q_PROPERTY(QString description MEMBER m_description NOTIFY descriptionChanged)
+ public:
+  using List = QList<Entry*>;
 
-  Q_PROPERTY(QString author MEMBER m_author NOTIFY authorChanged)
-  Q_PROPERTY(QString artist MEMBER m_artist NOTIFY artistChanged)
+ private:
+  Q_PROPERTY(QString title MEMBER m_title CONSTANT)
+  Q_PROPERTY(QString description MEMBER m_description CONSTANT)
 
-  Q_PROPERTY(QStringList genre MEMBER m_genre NOTIFY genreChanged)
-  Q_PROPERTY(Status status MEMBER m_status NOTIFY statusChanged)
-  Q_PROPERTY(QString status_string READ statusString NOTIFY statusChanged)
+  Q_PROPERTY(QString author MEMBER m_author CONSTANT)
+  Q_PROPERTY(QString artist MEMBER m_artist CONSTANT)
 
-  Q_PROPERTY(QUrl image MEMBER m_image NOTIFY imageChanged)
+  Q_PROPERTY(QStringList genre MEMBER m_genre CONSTANT)
+  Q_PROPERTY(Status status MEMBER m_status CONSTANT)
+  Q_PROPERTY(QString status_string READ statusString CONSTANT)
 
-  Q_PROPERTY(ChapterList chapters MEMBER m_chapters NOTIFY chaptersChanged)
+  Q_PROPERTY(QUrl image MEMBER m_image CONSTANT)
+
+  Q_PROPERTY(QStringList chapters READ chapters NOTIFY chaptersChanged)
 
  public:
   Q_ENUM(Status)
@@ -57,20 +61,9 @@ class Entry : public QObject {
   bool isChaptersLoaded() const;
   void loadChapters();
   Q_INVOKABLE void refreshChapters();
+  Q_SIGNAL void chaptersChanged();
 
- Q_SIGNALS:
-  void titleChanged();
-  void descriptionChanged();
-
-  void authorChanged();
-  void artistChanged();
-
-  void genreChanged();
-  void statusChanged();
-
-  void imageChanged();
-
-  void chaptersChanged();
+  QStringList chapters() const;
 
  private:
   QDir m_path;
@@ -86,10 +79,8 @@ class Entry : public QObject {
 
   QUrl m_image;
 
-  ChapterList m_chapters;
+  QStringList m_chapters_path;
   bool m_is_chapters_loaded = false;
 };
-
-using EntryList = QList<Entry*>;
 
 #endif

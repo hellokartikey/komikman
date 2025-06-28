@@ -32,3 +32,5 @@ Config::Config(QObject* parent)
 KAboutData Config::aboutData() const {
   return KAboutData::applicationData();
 }
+
+#include "moc_config.cpp"

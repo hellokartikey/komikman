@@ -12,28 +12,30 @@ class Backend : public QObject {
   QML_ELEMENT
   QML_SINGLETON
 
-  Q_PROPERTY(EntryList entries READ entries CONSTANT)
+  Q_PROPERTY(Entry::List entries READ entries CONSTANT)
   Q_PROPERTY(Entry* entry MEMBER m_entry NOTIFY entryChanged)
-  Q_PROPERTY(Chapter* chapter MEMBER m_chapter NOTIFY chapterChanged)
+  Q_PROPERTY(Chapter* chapter READ currentChapter NOTIFY chapterChanged)
 
  public:
   explicit Backend(QObject* parent = nullptr);
 
-  const EntryList& entries() const;
+  const Entry::List& entries() const;
 
   Q_INVOKABLE void openEntry(Entry* entry);
   Q_INVOKABLE void closeEntry();
   Q_SIGNAL void entryChanged();
 
-  Q_INVOKABLE void openChapter(Chapter* chapter);
+  Q_INVOKABLE void openChapter(QString path);
   Q_INVOKABLE void closeChapter();
   Q_SIGNAL void chapterChanged();
+
+  Chapter* currentChapter();
 
  private:
   Library m_library;
 
   Entry* m_entry = nullptr;
-  Chapter* m_chapter = nullptr;
+  std::unique_ptr<Chapter> m_chapter;
 };
 
 #endif
