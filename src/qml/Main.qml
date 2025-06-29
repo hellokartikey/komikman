@@ -61,7 +61,7 @@ Kirigami.ApplicationWindow {
 
   Component {
     id: entryPage
-    EntryPage {}
+    Entry {}
   }
 
   Component {

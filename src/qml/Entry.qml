@@ -112,6 +112,6 @@ Form.FormCardPage {
 
   Component {
     id: chaptersPage
-    ChaptersPage {}
+    Chapters {}
   }
 }

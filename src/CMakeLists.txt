@@ -44,12 +44,13 @@ ecm_add_qml_module(komikman URI Komikman)
 ecm_target_qml_sources(komikman
 SOURCES
   qml/Main.qml
-  qml/EntryData.qml
-  qml/EntryDelegate.qml
-  qml/EntryPage.qml
-  qml/CoverImage.qml
-  qml/ChaptersPage.qml
-  qml/ChapterView.qml
+  qml/Entry.qml
+  qml/Chapters.qml
+  qml/Reader.qml
+
+  qml/Delegates/CoverImage.qml
+  qml/Delegates/EntryData.qml
+  qml/Delegates/EntryDelegate.qml
 )
 
 install(TARGETS komikman ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

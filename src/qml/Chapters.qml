@@ -46,6 +46,6 @@ Form.FormCardPage {
 
   Component {
     id: chapterView
-    ChapterView {}
+    Reader {}
   }
 }
