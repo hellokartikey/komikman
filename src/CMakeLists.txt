@@ -35,6 +35,8 @@ PRIVATE
   entry.cpp
   library.hpp
   library.cpp
+  image.hpp
+  image.cpp
 )
 
 ecm_add_qml_module(komikman URI Komikman)

@@ -9,6 +9,8 @@
 
 #include <KLocalizedContext>
 
+#include "image.hpp"
+
 using namespace Qt::Literals;
 
 int main(int argc, char *argv[]) {
@@ -28,6 +30,7 @@ int main(int argc, char *argv[]) {
     QIcon::setThemeName(u"breeze"_s);
   }
 
+  qml.addImageProvider(IMAGE_PREFIX, new Provider());
   qml.rootContext()->setContextObject(new KLocalizedContext(&qml));
   qml.loadFromModule(u"Komikman"_s, u"Main"_s);
 
