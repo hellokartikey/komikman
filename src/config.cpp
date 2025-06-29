@@ -28,7 +28,7 @@ Config::Config(QObject* parent)
   aboutData.setLicense(KAboutLicense::GPL_V3);
 
   aboutData.addAuthor(u"hellokartikey"_s, u""_s, u""_s,
-                      u"https://github.com/hellokartikey"_s);
+                      u"https://hellokartikey.github.io"_s);
 
   KAboutData::setApplicationData(aboutData);
 }
