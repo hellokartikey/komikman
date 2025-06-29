@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QString>
 
+#include "chapter.hpp"
 #include "library.hpp"
 
 class Backend : public QObject {
@@ -25,6 +26,7 @@ class Backend : public QObject {
   Q_SIGNAL void entryChanged();
 
   Q_INVOKABLE void openChapter(QString path);
+  Q_INVOKABLE void openChapterIndex(int index);
   Q_SIGNAL void chapterChanged();
 
   Chapter* currentChapter();
@@ -33,7 +35,7 @@ class Backend : public QObject {
   Library m_library;
 
   Entry* m_entry = nullptr;
-  std::unique_ptr<Chapter> m_chapter;
+  Chapter::Ptr m_chapter;
 };
 
 #endif

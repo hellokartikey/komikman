@@ -27,6 +27,10 @@ void Backend::openChapter(QString path) {
   Q_EMIT chapterChanged();
 }
 
+void Backend::openChapterIndex(int index) {
+  openChapter(ASSERT_VAL(m_entry)->chapterPaths().at(index));
+}
+
 Chapter* Backend::currentChapter() {
   ASSERT(m_chapter);
   return m_chapter.get();

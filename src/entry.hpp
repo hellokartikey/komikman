@@ -49,7 +49,7 @@ class Entry : public QObject {
 
   Q_PROPERTY(QUrl image MEMBER m_image CONSTANT)
 
-  Q_PROPERTY(QStringList chapters READ chapters NOTIFY chaptersChanged)
+  Q_PROPERTY(QStringList chapters READ chapterNames NOTIFY chaptersChanged)
 
  public:
   Q_ENUM(Status)
@@ -63,7 +63,8 @@ class Entry : public QObject {
   Q_INVOKABLE void refreshChapters();
   Q_SIGNAL void chaptersChanged();
 
-  QStringList chapters() const;
+  QStringList chapterNames() const;
+  QStringList chapterPaths() const;
 
  private:
   QDir m_path;

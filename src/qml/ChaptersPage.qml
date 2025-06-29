@@ -32,11 +32,12 @@ Form.FormCardPage {
     Repeater {
       model: Backend.entry.chapters
       delegate: Form.FormButtonDelegate {
+        required property int index
         required property string modelData
 
         text: modelData
         onClicked: {
-          Backend.openChapter(modelData)
+          Backend.openChapterIndex(index)
           applicationWindow().pageStack.layers.push(chapterView)
         }
       }

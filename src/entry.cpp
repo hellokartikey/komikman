@@ -104,12 +104,10 @@ void Entry::refreshChapters() {
       chapters_list << chapter.absoluteFilePath();
     }
 
+    // Sort chapters
     auto collator = QCollator{};
     collator.setNumericMode(true);
-
-    std::ranges::sort(chapters_list, [&](auto lhs, auto rhs) {
-      return collator.compare(lhs, rhs) < 0;
-    });
+    std::ranges::sort(chapters_list, collator);
   }
 
   m_chapters_path = chapters_list;
@@ -117,7 +115,7 @@ void Entry::refreshChapters() {
   Q_EMIT chaptersChanged();
 }
 
-QStringList Entry::chapters() const {
+QStringList Entry::chapterNames() const {
   auto list = QStringList{};
 
   for (auto chapter : m_chapters_path) {
@@ -125,6 +123,10 @@ QStringList Entry::chapters() const {
   }
 
   return list;
+}
+
+QStringList Entry::chapterPaths() const {
+  return m_chapters_path;
 }
 
 #include "moc_entry.cpp"
