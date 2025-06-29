@@ -35,7 +35,7 @@ class Chapter : public QObject {
 
   virtual qsizetype length() const;
 
-  virtual QImage get(qsizetype) const;
+  virtual QImage get(qsizetype /* index */) const;
   QImage cover() const;
 
   Q_INVOKABLE QUrl url(qsizetype index) const;

@@ -65,13 +65,15 @@ QUrl Chapter::currentPage() const {
 }
 
 void Chapter::nextPage() {
-  if (index() < length()) {
+  // Must not go above length()
+  if (index() + 1 < length()) {
     m_index++;
     Q_EMIT indexChanged();
   }
 }
 
 void Chapter::prevPage() {
+  // Must not go below 0
   if (0 < index()) {
     m_index--;
     Q_EMIT indexChanged();
