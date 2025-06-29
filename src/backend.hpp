@@ -2,7 +2,9 @@
 #define HK_KOMIKMAN_BACKEND_HPP
 
 #include <QtQmlIntegration/qqmlintegration.h>
+#include <QJSEngine>
 #include <QObject>
+#include <QQmlEngine>
 #include <QString>
 
 #include "chapter.hpp"
@@ -18,7 +20,10 @@ class Backend : public QObject {
   Q_PROPERTY(Chapter* chapter READ currentChapter NOTIFY chapterChanged)
 
  public:
-  explicit Backend(QObject* parent = nullptr);
+  explicit Backend(int, QObject* parent = nullptr);
+
+  static Backend* the();
+  static Backend* create(QQmlEngine*, QJSEngine*);
 
   const Entry::List& entries() const;
 

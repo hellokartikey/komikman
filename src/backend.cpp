@@ -1,14 +1,23 @@
 #include "backend.hpp"
 
-#include <QDebug>
-
 #include <libassert/assert.hpp>
 
 using namespace Qt::Literals;
 
-Backend::Backend(QObject* parent)
+Backend::Backend(int, QObject* parent)
     : QObject(parent),
       m_library(u"/home/kartikey/HDD/Manga/local"_s) {}
+
+Backend* Backend::the() {
+  static auto backend = Backend{10};
+  return &backend;
+}
+
+Backend* Backend::create(QQmlEngine*, QJSEngine*) {
+  auto* ptr = ASSERT_VAL(Backend::the());
+  QJSEngine::setObjectOwnership(ptr, QJSEngine::CppOwnership);
+  return ptr;
+}
 
 const Entry::List& Backend::entries() const {
   return m_library.entries();
