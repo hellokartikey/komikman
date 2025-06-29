@@ -56,8 +56,22 @@ QUrl Chapter::coverUrl() const {
   return url(0);
 }
 
+qsizetype Chapter::pageNumber() const {
+  return index() + 1;
+}
+
 qsizetype Chapter::index() const {
   return m_index;
+}
+
+bool Chapter::hasNext() const {
+  // Must not go above length()
+  return pageNumber() < length();
+}
+
+bool Chapter::hasPrev() const {
+  // Must not go below 0
+  return 0 < index();
 }
 
 QUrl Chapter::currentPage() const {
@@ -65,16 +79,14 @@ QUrl Chapter::currentPage() const {
 }
 
 void Chapter::nextPage() {
-  // Must not go above length()
-  if (index() + 1 < length()) {
+  if (hasNext()) {
     m_index++;
     Q_EMIT indexChanged();
   }
 }
 
 void Chapter::prevPage() {
-  // Must not go below 0
-  if (0 < index()) {
+  if (hasPrev()) {
     m_index--;
     Q_EMIT indexChanged();
   }
