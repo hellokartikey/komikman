@@ -2,15 +2,19 @@
 
 #include <libassert/assert.hpp>
 
+#include "config.hpp"
+
 using namespace Qt::Literals;
 
-Backend::Backend(int, QObject* parent)
+Backend::Backend(QObject* parent)
     : QObject(parent),
-      m_library(u"/home/kartikey/HDD/Manga/local"_s) {}
+      m_library(u"/home/kartikey/HDD/Manga/local"_s) {
+  Config::the();  // Instantiate config at startup
+}
 
 Backend* Backend::the() {
-  static auto backend = Backend{10};
-  return &backend;
+  static auto inst = Backend{};
+  return &inst;
 }
 
 Backend* Backend::create(QQmlEngine*, QJSEngine*) {

@@ -1,13 +1,17 @@
 #include "config.hpp"
 
+#include <QDebug>
 #include <QString>
+
+#include <libassert/assert.hpp>
 
 #include "version.hpp"
 
 using namespace Qt::Literals;
 
 Config::Config(QObject* parent)
-    : QObject(parent) {
+    : QObject(parent),
+      m_theme(KColorSchemeManager::instance()) {
   auto aboutData = KAboutData{};
 
   aboutData.setComponentName(u"komikman"_s);
@@ -29,8 +33,46 @@ Config::Config(QObject* parent)
   KAboutData::setApplicationData(aboutData);
 }
 
+Config* Config::the() {
+  static auto inst = Config{};
+  return &inst;
+}
+
+Config* Config::create(QQmlEngine*, QJSEngine*) {
+  auto* ptr = ASSERT_VAL(Config::the());
+  QJSEngine::setObjectOwnership(ptr, QJSEngine::CppOwnership);
+  return ptr;
+}
+
 KAboutData Config::aboutData() const {
   return KAboutData::applicationData();
+}
+
+KColorSchemeManager* Config::themeManager() const {
+  return ASSERT_VAL(m_theme);
+}
+
+QString Config::themeName() const {
+  return themeManager()->activeSchemeName();
+}
+
+QAbstractItemModel* Config::themes() const {
+  return themeManager()->model();
+}
+
+int Config::theme() const {
+  return themeManager()
+      ->indexForScheme(themeManager()->activeSchemeName())
+      .row();
+}
+
+void Config::setTheme(int index) {
+  if (index == theme()) {
+    return;
+  }
+
+  themeManager()->activateScheme(themes()->index(index, 0));
+  Q_EMIT themeChanged();
 }
 
 #include "moc_config.cpp"

@@ -25,7 +25,7 @@ Kirigami.ApplicationWindow {
       Kirigami.Action {
         text: "Settings"
         icon.name: "settings-configure-symbolic"
-        onTriggered: console.log("settings")
+        onTriggered: applicationWindow().pageStack.layers.push(settingsPage)
       },
 
       Kirigami.Action {
@@ -62,6 +62,11 @@ Kirigami.ApplicationWindow {
   Component {
     id: entryPage
     Entry {}
+  }
+
+  Component {
+    id: settingsPage
+    Settings {}
   }
 
   Component {

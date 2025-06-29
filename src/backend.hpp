@@ -19,9 +19,10 @@ class Backend : public QObject {
   Q_PROPERTY(Entry* entry MEMBER m_entry NOTIFY entryChanged)
   Q_PROPERTY(Chapter* chapter READ currentChapter NOTIFY chapterChanged)
 
- public:
-  explicit Backend(int, QObject* parent = nullptr);
+ private:
+  explicit Backend(QObject* parent = nullptr);
 
+ public:
   static Backend* the();
   static Backend* create(QQmlEngine*, QJSEngine*);
 

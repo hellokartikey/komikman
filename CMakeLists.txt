@@ -29,6 +29,7 @@ COMPONENTS
   CoreAddons
   I18n
   Archive
+  ColorScheme
 )
 
 find_package(libassert REQUIRED)

@@ -104,6 +104,7 @@ Form.FormCardPage {
       Layout.fillWidth: true
       Layout.margins: Kirigami.Units.gridUnit
 
+      color: Kirigami.Theme.textColor
       horizontalAlignment: Text.AlignJustify
       text: entry.description
       wrapMode: Text.WordWrap

@@ -17,6 +17,7 @@ PRIVATE
   KF6::CoreAddons
   KF6::I18n
   KF6::Archive
+  KF6::ColorScheme
   libassert::assert
   nlohmann_json::nlohmann_json
 )
@@ -47,6 +48,7 @@ SOURCES
   qml/Entry.qml
   qml/Chapters.qml
   qml/Reader.qml
+  qml/Settings.qml
 
   qml/Delegates/CoverImage.qml
   qml/Delegates/EntryData.qml
