@@ -16,10 +16,10 @@ PRIVATE
   KF6::Kirigami
   KF6::CoreAddons
   KF6::I18n
-  KF6::Archive
   KF6::ColorScheme
   libassert::assert
   nlohmann_json::nlohmann_json
+  LibArchive::LibArchive
 )
 
 target_sources(komikman
@@ -28,10 +28,6 @@ PRIVATE
   backend.cpp
   chapter.hpp
   chapter.cpp
-  archive.hpp
-  archive.cpp
-  cbz.hpp
-  cbz.cpp
   config.hpp
   config.cpp
   entry.hpp

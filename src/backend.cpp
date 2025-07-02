@@ -40,7 +40,6 @@ void Backend::openChapter(QString path) {
   }
 
   m_chapter = Chapter::make(path);
-  m_chapter->open();
   Q_EMIT chapterChanged();
 }
 

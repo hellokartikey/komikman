@@ -11,6 +11,9 @@
 
 #include <memory>
 
+#include <archive.h>
+#include <archive_entry.h>
+
 /**
  * Base class which provides the Chapter API interface
  */
@@ -20,6 +23,7 @@ class Chapter : public QObject {
  public:
   using Ptr = std::unique_ptr<Chapter>;
   using List = QList<Chapter*>;
+  using ArchivePtr = std::unique_ptr<archive, decltype(&archive_read_free)>;
 
  private:
   Q_PROPERTY(QString title READ title CONSTANT)
@@ -37,17 +41,16 @@ class Chapter : public QObject {
 
  public:
   explicit Chapter(QString path, QObject* parent = nullptr);
-  virtual ~Chapter();
+  ~Chapter() = default;
 
   QString title() const;
   QString path() const;
 
-  virtual void open();
-  virtual void close();
+  ArchivePtr openArchive() const;
 
-  virtual qsizetype length() const;
+  qsizetype length() const;
 
-  virtual QImage get(qsizetype /* index */) const;
+  QImage get(qsizetype index) const;
   QImage cover() const;
 
   Q_INVOKABLE QUrl url(qsizetype index) const;
@@ -69,6 +72,7 @@ class Chapter : public QObject {
  private:
   QString m_path;
   qsizetype m_index = 0;
+  QStringList m_pages;
 };
 
 #endif

@@ -14,26 +14,26 @@ set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 find_package(Qt6 ${QT_MIN_VERSION}
 REQUIRED
 COMPONENTS
-  Core
   Gui
-  Widgets
   Qml
+  Core
   Quick
+  Widgets
   QuickControls2
 )
 
 find_package(KF6 ${KF_MIN_VERSION}
 REQUIRED
 COMPONENTS
+  I18n
   Kirigami
   CoreAddons
-  I18n
-  Archive
   ColorScheme
 )
 
 find_package(libassert REQUIRED)
 find_package(nlohmann_json REQUIRED)
+find_package(LibArchive REQUIRED)
 
 include(KDEInstallDirs)
 include(KDECMakeSettings)
