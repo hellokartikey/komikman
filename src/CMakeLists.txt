@@ -28,6 +28,8 @@ PRIVATE
   backend.cpp
   chapter.hpp
   chapter.cpp
+  archive.hpp
+  archive.cpp
   cbz.hpp
   cbz.cpp
   config.hpp

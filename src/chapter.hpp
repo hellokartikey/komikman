@@ -11,6 +11,9 @@
 
 #include <memory>
 
+/**
+ * Base class which provides the Chapter API interface
+ */
 class Chapter : public QObject {
   Q_OBJECT
 
@@ -19,7 +22,8 @@ class Chapter : public QObject {
   using List = QList<Chapter*>;
 
  private:
-  Q_PROPERTY(QString title MEMBER m_title CONSTANT)
+  Q_PROPERTY(QString title READ title CONSTANT)
+  Q_PROPERTY(QString path READ path CONSTANT)
 
   Q_PROPERTY(QUrl currentPage READ currentPage NOTIFY indexChanged)
 
@@ -35,7 +39,8 @@ class Chapter : public QObject {
   explicit Chapter(QString path, QObject* parent = nullptr);
   virtual ~Chapter();
 
-  const QString& title() const;
+  QString title() const;
+  QString path() const;
 
   virtual void open();
   virtual void close();
@@ -62,7 +67,7 @@ class Chapter : public QObject {
   static Ptr make(QString path, QObject* parent = nullptr);
 
  private:
-  QString m_title;
+  QString m_path;
   qsizetype m_index = 0;
 };
 

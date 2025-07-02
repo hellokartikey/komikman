@@ -7,14 +7,18 @@
 
 Chapter::Chapter(QString path, QObject* parent)
     : QObject(parent),
-      m_title(QFileInfo{path}.baseName()) {}
+      m_path(path) {}
 
 Chapter::~Chapter() {
   close();
 }
 
-const QString& Chapter::title() const {
-  return m_title;
+QString Chapter::title() const {
+  return QFileInfo{m_path}.baseName();
+}
+
+QString Chapter::path() const {
+  return m_path;
 }
 
 void Chapter::open() {}
@@ -30,7 +34,7 @@ Chapter::Ptr Chapter::make(QString path, QObject* parent) {
   auto file = QFileInfo{path};
 
   if (file.completeSuffix() == u"cbz"_s) {
-    return std::make_unique<CbzChapter>(path, parent);
+    return std::make_unique<Cbz>(path, parent);
   }
 
   return std::make_unique<Chapter>(path, parent);

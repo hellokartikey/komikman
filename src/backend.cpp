@@ -35,6 +35,10 @@ void Backend::openEntry(Entry* entry) {
 }
 
 void Backend::openChapter(QString path) {
+  if (m_chapter && m_chapter->path() == path) {
+    return;
+  }
+
   m_chapter = Chapter::make(path);
   m_chapter->open();
   Q_EMIT chapterChanged();
