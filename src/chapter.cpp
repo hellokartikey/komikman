@@ -1,6 +1,7 @@
 #include "chapter.hpp"
 
 #include <QCollator>
+#include <QDirListing>
 #include <QFileInfo>
 
 #include "image.hpp"
@@ -8,16 +9,26 @@
 Chapter::Chapter(QString path, QObject* parent)
     : QObject(parent),
       m_path(path) {
-  auto ptr = openArchive();
+  auto info = QFileInfo{m_path};
 
-  for (archive_entry* entry;
-       archive_read_next_header(ptr.get(), &entry) == ARCHIVE_OK;) {
-    auto info =
-        QFileInfo{QString::fromLocal8Bit(archive_entry_pathname(entry))};
+  if (info.isDir()) {
+    using enum QDirListing::IteratorFlag;
 
-    // Insert only if the entry is a file
-    if (info.fileName().size()) {
-      m_pages << info.filePath();
+    for (auto page : QDirListing(m_path, Recursive | ExcludeDirs)) {
+      m_pages << page.absoluteFilePath();
+    }
+  } else {
+    auto ptr = openArchive();
+
+    for (archive_entry* entry;
+         archive_read_next_header(ptr.get(), &entry) == ARCHIVE_OK;) {
+      auto info =
+          QFileInfo{QString::fromLocal8Bit(archive_entry_pathname(entry))};
+
+      // Insert only if the entry is a file
+      if (info.fileName().size()) {
+        m_pages << info.filePath();
+      }
     }
   }
 
@@ -64,17 +75,23 @@ QImage Chapter::cover() const {
 }
 
 QImage Chapter::get(qsizetype index) const {
-  auto ptr = openArchive();
+  auto info = QFileInfo{m_path};
 
-  for (archive_entry* entry; !archive_read_next_header(ptr.get(), &entry);) {
-    auto* pathname = archive_entry_pathname(entry);
+  if (info.isDir()) {
+    return QImage{m_pages[index]};
+  } else {
+    auto ptr = openArchive();
 
-    // Compare each entry with the indexed page
-    if (m_pages[index].toLocal8Bit() == pathname) {
-      auto buffer = QByteArray(archive_entry_size(entry), 0);
-      archive_read_data(ptr.get(), buffer.data(), buffer.size());
+    for (archive_entry* entry; !archive_read_next_header(ptr.get(), &entry);) {
+      auto* pathname = archive_entry_pathname(entry);
 
-      return QImage::fromData(std::move(buffer));
+      // Compare each entry with the indexed page
+      if (m_pages[index].toLocal8Bit() == pathname) {
+        auto buffer = QByteArray(archive_entry_size(entry), 0);
+        archive_read_data(ptr.get(), buffer.data(), buffer.size());
+
+        return QImage::fromData(std::move(buffer));
+      }
     }
   }
 
