@@ -52,9 +52,9 @@ SOURCES
   qml/Reader.qml
   qml/Settings.qml
 
-  qml/Delegates/CoverImage.qml
-  qml/Delegates/EntryData.qml
-  qml/Delegates/EntryDelegate.qml
+  qml/delegates/CoverImage.qml
+  qml/delegates/EntryData.qml
+  qml/delegates/EntryDelegate.qml
 )
 
 install(TARGETS komikman ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
