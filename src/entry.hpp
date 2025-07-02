@@ -30,6 +30,9 @@ NLOHMANN_JSON_SERIALIZE_ENUM(Status, {
                                          {OnHiatus, "6"},
                                      })
 
+/**
+ * Object to represent a series
+ */
 class Entry : public QObject {
   Q_OBJECT
 

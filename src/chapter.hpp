@@ -15,7 +15,7 @@
 #include <archive_entry.h>
 
 /**
- * Base class which provides the Chapter API interface
+ * Handle for the open chapter.
  */
 class Chapter : public QObject {
   Q_OBJECT

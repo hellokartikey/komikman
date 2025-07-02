@@ -6,6 +6,9 @@
 
 #include "entry.hpp"
 
+/**
+ * For scanning entries in a folder.
+ */
 class Library : public QObject {
   Q_OBJECT
 

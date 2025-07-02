@@ -10,6 +10,9 @@
 #include "chapter.hpp"
 #include "library.hpp"
 
+/**
+ * Singleton object that interacts with UI.
+ */
 class Backend : public QObject {
   Q_OBJECT
   QML_ELEMENT

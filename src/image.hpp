@@ -6,6 +6,9 @@
 
 inline const auto IMAGE_PREFIX = QString{u"page"};
 
+/**
+ * Image provider reading pages from current open chapter.
+ */
 class Provider : public QQuickImageProvider {
  public:
   Provider();

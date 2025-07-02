@@ -10,6 +10,9 @@
 #include <KAboutData>
 #include <KColorSchemeManager>
 
+/**
+ * Singleton for handling configuration file.
+ */
 class Config : public QObject {
   Q_OBJECT
   QML_ELEMENT
