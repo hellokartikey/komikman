@@ -12,7 +12,13 @@ Chapter::Chapter(QString path, QObject* parent)
 
   for (archive_entry* entry;
        archive_read_next_header(ptr.get(), &entry) == ARCHIVE_OK;) {
-    m_pages << QString::fromLocal8Bit(archive_entry_pathname(entry));
+    auto info =
+        QFileInfo{QString::fromLocal8Bit(archive_entry_pathname(entry))};
+
+    // Insert only if the entry is a file
+    if (info.fileName().size()) {
+      m_pages << info.filePath();
+    }
   }
 
   // Sort pages
